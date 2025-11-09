@@ -21,13 +21,19 @@ export default function RegisterForm() {
     agree: false,
   });
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const target = e.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+const handleChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+) => {
+  const target = e.target;
+
+  if (target instanceof HTMLInputElement) {
     const { name, value, type, checked } = target;
     setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
-  };
+  } else if (target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) {
+    const { name, value } = target;
+    setFormData({ ...formData, [name]: value });
+  }
+};
 
   const validatePassword = (password: string) => {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/]).{8,}$/.test(password);
