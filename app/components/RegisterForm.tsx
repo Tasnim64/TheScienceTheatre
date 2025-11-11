@@ -21,6 +21,8 @@ export default function RegisterForm() {
     agree: false,
   });
 
+const [isSubmitting, setIsSubmitting] = useState(false);
+
 const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
 ) => {
@@ -41,10 +43,11 @@ const handleChange = (
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    if (!formData.agree) return alert("You must agree to the terms and conditions.");
-    if (!validatePassword(formData.password)) return alert("Password must contain uppercase, lowercase, number, special character, and at least 8 chars.");
-    if (formData.password !== formData.confirmPassword) return alert("Passwords do not match!");
+    if (!formData.agree) {alert("You must agree to the terms and conditions."); setIsSubmitting(false); return;}
+    if (!validatePassword(formData.password)) {alert("Password must contain uppercase, lowercase, number, special character, and at least 8 chars."); setIsSubmitting(false); return;}
+    if (formData.password !== formData.confirmPassword) {alert("Passwords do not match!"); setIsSubmitting(false); return;}
 
     try {
       const res = await fetch("/api/register", {
@@ -80,6 +83,8 @@ const handleChange = (
     } catch (error) {
       console.error(error);
       alert("❌ Failed to submit form.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -94,7 +99,7 @@ const handleChange = (
         </div>
 
         <input type="date" name="dob" value={formData.dob} onChange={handleChange} required className="form-input"/>
-        
+
         <select name="institution" value={formData.institution} onChange={handleChange} required className="form-input">
           <option value="">Select Institution</option>
           <option value="BRAC University">BRAC University</option>
