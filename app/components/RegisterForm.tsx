@@ -21,21 +21,20 @@ export default function RegisterForm() {
     agree: false,
   });
 
-const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-) => {
-  const target = e.target;
-
-  if (target instanceof HTMLInputElement) {
-    const { name, value, type, checked } = target;
-    setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
-  } else if (target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) {
-    const { name, value } = target;
-    setFormData({ ...formData, [name]: value });
-  }
-};
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    const target = e.target;
+    if (target instanceof HTMLInputElement) {
+      const { name, value, type, checked } = target;
+      setFormData({ ...formData, [name]: type === "checkbox" ? checked : value });
+    } else if (target instanceof HTMLSelectElement || target instanceof HTMLTextAreaElement) {
+      const { name, value } = target;
+      setFormData({ ...formData, [name]: value });
+    }
+  };
 
   const validatePassword = (password: string) => {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]|:;"'<>,.?/]).{8,}$/.test(password);
@@ -45,9 +44,9 @@ const handleChange = (
     e.preventDefault();
     setIsSubmitting(true);
 
-    if (!formData.agree) {alert("You must agree to the terms and conditions."); setIsSubmitting(false); return;}
-    if (!validatePassword(formData.password)) {alert("Password must contain uppercase, lowercase, number, special character, and at least 8 chars."); setIsSubmitting(false); return;}
-    if (formData.password !== formData.confirmPassword) {alert("Passwords do not match!"); setIsSubmitting(false); return;}
+    if (!formData.agree) { alert("You must agree to the terms and conditions."); setIsSubmitting(false); return; }
+    if (!validatePassword(formData.password)) { alert("Password must contain uppercase, lowercase, number, special character, and at least 8 chars."); setIsSubmitting(false); return; }
+    if (formData.password !== formData.confirmPassword) { alert("Passwords do not match!"); setIsSubmitting(false); return; }
 
     try {
       const res = await fetch("/api/register", {
@@ -138,7 +137,9 @@ const handleChange = (
           <label className="text-sm">I agree to the <a href="#" className="text-[#a200ff] underline">Terms and Conditions</a></label>
         </div>
 
-        <button type="submit" className="w-full py-3 rounded-lg neon-btn text-lg font-bold tracking-widest uppercase mt-4">Register</button>
+        <button type="submit" disabled={isSubmitting} className="w-full py-3 rounded-lg neon-btn text-lg font-bold tracking-widest uppercase mt-4">
+          {isSubmitting ? "Submitting..." : "Register"}
+        </button>
       </form>
 
       <style jsx>{`
@@ -155,6 +156,19 @@ const handleChange = (
         .form-input:focus {
           border-color: #a200ff;
           box-shadow: 0 0 8px #a200ff;
+        }
+        .form-input::placeholder {
+          color: #d4bfff;
+          opacity: 1;
+        }
+        input[type="date"]::-webkit-datetime-edit-text,
+        input[type="date"]::-webkit-datetime-edit-month-field,
+        input[type="date"]::-webkit-datetime-edit-day-field,
+        input[type="date"]::-webkit-datetime-edit-year-field {
+          color: #d4bfff;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+          filter: invert(100%);
         }
         .neon-btn {
           background: linear-gradient(90deg, #a200ff, #ff0099);
