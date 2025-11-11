@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Science Theatre",
   description: "SCIENCE COMMUNICATION COMPETITION",
   icons: {
-    icon: "/STICON.ico",
+    icon: "/STFAVICON.ico",
   },
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet"
         />
-        <link rel="icon" href="/STICON.ico?v=2" />
+        <link rel="icon" href="/STFAVICON.ico?v=2" />
 
       </head>
 

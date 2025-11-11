@@ -13,9 +13,9 @@ const partnerLogos = [
 ];
 
 const sponsorLogos = [
-  { src: "/logos/sponsor1.png", href: "https://sponsor1.com" },
-  { src: "/logos/sponsor2.png", href: "https://sponsor2.com" },
-  { src: "/logos/sponsor3.png", href: "https://sponsor3.com" },
+  { src: "/sponsor1.jpg", href: "https://sponsor1.com" },
+  { src: "/sponsor2.jpg", href: "https://sponsor2.com" },
+  { src: "/sponsor3.jpg", href: "https://sponsor3.com" },
 ];
 
 export default function Home() {
